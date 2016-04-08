@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //If we don't request focus of the button, then the first thing that will
+        //appear in the app will be the huge and annoying Keyboard
+        Button button = (Button)findViewById(R.id.armarCuadros);
+        button.requestFocus();
 
     }
 
@@ -52,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
         players.add(j10.getText().toString());
         long seed = System.nanoTime();
         Collections.shuffle(players, new Random(seed));
-        showTheTeams(players);
+        showTheTeams(players,seed);
     }
-    public void showTheTeams(ArrayList players){
+    public void showTheTeams(ArrayList players,long color){
         for(int i = 0; i < 5; i++){
             firstTeam.add(players.get(i).toString());
         }
@@ -70,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
         adapter2 = null;
         adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, secondTeam);
         team2.setAdapter(adapter2);
+        TextView estado1 = (TextView)findViewById(R.id.estado1);
+        TextView estado2 = (TextView)findViewById(R.id.estado2);
+        if(color % 2 == 0){
+            estado1.setText("Chaleco");
+            estado2.setText("Sin Chaleco");
+        } else {
+            estado2.setText("Chaleco");
+            estado1.setText("Sin Chaleco");
+        }
         adapter2.notifyDataSetChanged();
         adapter1.notifyDataSetChanged();
 
