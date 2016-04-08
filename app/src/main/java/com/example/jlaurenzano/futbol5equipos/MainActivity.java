@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         showTheTeams(players);
     }
     public void showTheTeams(ArrayList players){
-        firstTeam = new ArrayList<>();
-        secondTeam = new ArrayList<>();
         for(int i = 0; i < 5; i++){
             firstTeam.add(players.get(i).toString());
         }
