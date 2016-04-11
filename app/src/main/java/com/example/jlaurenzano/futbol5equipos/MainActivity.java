@@ -1,5 +1,7 @@
 package com.example.jlaurenzano.futbol5equipos;
 
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,21 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -88,5 +105,36 @@ public class MainActivity extends AppCompatActivity {
         adapter2.notifyDataSetChanged();
         adapter1.notifyDataSetChanged();
 
+        new MyTask().execute();
+    }
+
+    public void sendToMySql(){
+        String equipo1 ="";
+        String equipo2 = "";
+        for(int i = 0; i < firstTeam.size(); i++){
+            equipo1 += " "+firstTeam.get(i);
+            equipo2 += " "+secondTeam.get(i);
+        }
+        Log.d("Ejecutando","SI");
+        new MyTask().execute();
+    }
+
+    private class MyTask extends AsyncTask<Void, Void, Void> {
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                URL url = new URL("http://altifutbol5.tk/Conextion.php?equipo=1&equipos=3");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                Log.d("Progreso","ENVIANDOOasdasad");
+                urlConnection.connect();
+                Log.d("Progreso","ENVIADO");
+
+            } catch(Exception e){
+                Log.d("Mensaje",e.toString());
+            }
+            return null;
+        }
     }
 }
