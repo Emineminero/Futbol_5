@@ -12,15 +12,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -43,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> secondTeam = new ArrayList<String>();
     ArrayAdapter<String> adapter1;
     ArrayAdapter<String> adapter2;
+    Boolean shouldUploadChecked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,21 +109,26 @@ public class MainActivity extends AppCompatActivity {
         adapter2.notifyDataSetChanged();
         adapter1.notifyDataSetChanged();
 
-        new MyTask().execute();
+        if(shouldUploadChecked) {
+            Log.d("Subir a servidor","Subiendo al server");
+            new MyTask().execute();
+        } else {
+            Log.d("Subir a servidor","No subimos al server");
+        }
     }
 
     public void sendToMySql(){
         String equipo1 ="";
         String equipo2 = "";
         for(int i = 0; i < firstTeam.size(); i++){
-            equipo1 += " "+firstTeam.get(i);
-            equipo2 += " "+secondTeam.get(i);
+            equipo1 += "%20"+firstTeam.get(i).replace(" ","");
+            equipo2 += "%20"+secondTeam.get(i).replace(" ","-");
         }
         Log.d("Ejecutando","SI");
-        new MyTask().execute();
+        sendRequest(equipo1,equipo2);
     }
-    public void sendRequest(){
-        final String url = "http://altifutbol5.com/Conextion.php?equipo=21&equipos=23";
+    public void sendRequest(String e, String e2){
+        final String url = "http://altifutbol5.tk/Conextion.php?equipo="+e+"&equipos="+e2;
         Log.d("ahi viene","viene");
         // prepare the Request
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -157,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 // add it to the RequestQueue
 
 
-        RequestQueue queue = null;
+        RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(getRequest);
     }
 
@@ -167,11 +171,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                sendRequest();
+                sendToMySql();
             } catch(Exception e){
                 Log.d("Mensaje",e.toString());
             }
             return null;
         }
+    }
+
+    public void toggleOnClick(View v){
+        ToggleButton shouldUpload = (ToggleButton)findViewById(R.id.uploadToServer);
+        if(shouldUpload.isChecked()){
+            shouldUploadChecked = true;
+        } else {
+            shouldUploadChecked = false;
+        }
+
     }
 }

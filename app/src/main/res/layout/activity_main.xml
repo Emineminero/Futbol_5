@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:inputType="textPersonName"
-        android:text="Jugador 1"
+        android:text="Jugador1"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:allowUndo="true" />
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador2"
         android:inputType="textPersonName"
-        android:text="Jugador 2"
+        android:text="Jugador2"
         android:layout_below="@+id/jugador1"
         android:layout_alignParentStart="true" />
 
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador3"
         android:inputType="textPersonName"
-        android:text="Jugador 3"
+        android:text="Jugador3"
         android:layout_below="@+id/jugador2"
         android:layout_alignParentStart="true" />
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador4"
         android:inputType="textPersonName"
-        android:text="Jugador 4"
+        android:text="Jugador4"
         android:layout_below="@+id/jugador2"
         android:layout_alignParentStart="true"
         android:layout_marginTop="43dp" />
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador5"
         android:inputType="textPersonName"
-        android:text="Jugador 5"
+        android:text="Jugador5"
         android:layout_below="@+id/jugador3"
         android:layout_alignParentStart="true"
         android:layout_marginTop="46dp" />
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador8"
         android:inputType="textPersonName"
-        android:text="Jugador 8"
+        android:text="Jugador8"
         android:layout_above="@+id/jugador9"
         android:layout_alignStart="@+id/jugador7" />
 
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador6"
         android:inputType="textPersonName"
-        android:text="Jugador 6"
+        android:text="Jugador6"
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@+id/team2" />
 
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador7"
         android:inputType="textPersonName"
-        android:text="Jugador 7"
+        android:text="Jugador7"
         android:layout_below="@+id/jugador1"
         android:layout_alignStart="@+id/jugador6" />
 
@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador9"
         android:inputType="textPersonName"
-        android:text="Jugador 9"
+        android:text="Jugador9"
         android:layout_below="@+id/jugador3"
         android:layout_alignParentEnd="true" />
 
@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/jugador10"
         android:inputType="textPersonName"
-        android:text="Jugador 10"
+        android:text="Jugador10"
         android:layout_below="@+id/jugador9"
         android:layout_alignEnd="@+id/team2" />
 
@@ -149,5 +149,16 @@
         android:id="@+id/estado2"
         android:layout_alignTop="@+id/estado1"
         android:layout_alignParentEnd="true" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MySQL"
+        android:id="@+id/uploadToServer"
+        android:layout_below="@+id/armarCuadros"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:checked="false"
+        android:onClick="toggleOnClick" />
 
 </RelativeLayout>
