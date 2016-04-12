@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,9 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.jlaurenzano.futbol5equipos.MainActivity"
-    android:focusable="true">
-
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.jlaurenzano.futbol5equipos.Left_Menu"
+    tools:showIn="@layout/app_bar_left__menu">
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -150,15 +151,6 @@
         android:layout_alignTop="@+id/estado1"
         android:layout_alignParentEnd="true" />
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MySQL"
-        android:id="@+id/uploadToServer"
-        android:layout_below="@+id/armarCuadros"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        android:checked="false"
-        android:onClick="toggleOnClick" />
+
 
 </RelativeLayout>
