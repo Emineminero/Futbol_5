@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import com.android.volley.*;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -19,6 +21,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,6 +33,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -118,6 +123,43 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Ejecutando","SI");
         new MyTask().execute();
     }
+    public void sendRequest(){
+        final String url = "http://altifutbol5.com/Conextion.php?equipo=21&equipos=23";
+        Log.d("ahi viene","viene");
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        Log.d("Response", response.toString());
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+               Map<String, String> map = new HashMap<>();
+               map.put("equipo", "fabio");
+               map.put("equipos", "fabiolo");
+
+                return map;
+            }
+        };
+
+// add it to the RequestQueue
+
+
+        RequestQueue queue = null;
+        queue.add(getRequest);
+    }
 
     private class MyTask extends AsyncTask<Void, Void, Void> {
 
@@ -125,12 +167,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                URL url = new URL("http://altifutbol5.tk/Conextion.php?equipo=1&equipos=3");
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                Log.d("Progreso","ENVIANDOOasdasad");
-                urlConnection.connect();
-                Log.d("Progreso","ENVIADO");
-
+                sendRequest();
             } catch(Exception e){
                 Log.d("Mensaje",e.toString());
             }
