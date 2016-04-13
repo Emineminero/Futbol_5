@@ -1,15 +1,9 @@
 package com.example.jlaurenzano.futbol5equipos;
 
-import android.content.ClipData;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -27,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -52,6 +45,7 @@ public class Left_Menu extends AppCompatActivity
     ArrayList<String> secondTeam = new ArrayList<String>();
     ArrayAdapter<String> adapter1;
     ArrayAdapter<String> adapter2;
+    ArrayAdapter<String> adapter3;
     Boolean shouldUploadChecked = false;
 
     @Override
@@ -69,46 +63,56 @@ public class Left_Menu extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //If we don't request focus of the button, then the first thing that will
-        //appear in the app will be the huge and annoying Keyboard
-        Button button = (Button)findViewById(R.id.armarCuadros);
-        button.performClick();
-        button.requestFocus();
     }
-    public void buttonOnClick(View v){
-        firstTeam = new ArrayList<>();
-        secondTeam = new ArrayList<>();
-        players = new ArrayList<>();
-        EditText j1 = (EditText)findViewById(R.id.jugador1);
-        EditText j2 = (EditText)findViewById(R.id.jugador2);
-        EditText j3 = (EditText)findViewById(R.id.jugador3);
-        EditText j4 = (EditText)findViewById(R.id.jugador4);
-        EditText j5 = (EditText)findViewById(R.id.jugador5);
-        EditText j6 = (EditText)findViewById(R.id.jugador6);
-        EditText j7 = (EditText)findViewById(R.id.jugador7);
-        EditText j8 = (EditText)findViewById(R.id.jugador8);
-        EditText j9 = (EditText)findViewById(R.id.jugador9);
-        EditText j10 = (EditText)findViewById(R.id.jugador10);
-        players.add(j1.getText().toString());
-        players.add(j2.getText().toString());
-        players.add(j3.getText().toString());
-        players.add(j4.getText().toString());
-        players.add(j5.getText().toString());
-        players.add(j6.getText().toString());
-        players.add(j7.getText().toString());
-        players.add(j8.getText().toString());
-        players.add(j9.getText().toString());
-        players.add(j10.getText().toString());
+
+    public void addPlayerOnClick(View v){
+        EditText jugador = (EditText) findViewById(R.id.jugador);
+        TextView cantidadJugadores = (TextView) findViewById(R.id.cantPlayers);
+        ListView currentPlayers = (ListView) findViewById(R.id.jugadoresActuales);
+        players.add(jugador.getText().toString());
+        cantidadJugadores.setText("Van "+players.size()+" Jugadores");
+        adapter3 = null;
+        adapter3 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, players);
+        currentPlayers.setAdapter(adapter3);
+         adapter3.notifyDataSetChanged();
+    }
+
+    public void deleteDataOnClick(View v){
+        players = new ArrayList<String>();
+        firstTeam = new ArrayList<String>();
+        secondTeam = new ArrayList<String>();
+        ListView currentPlayers = (ListView) findViewById(R.id.jugadoresActuales);
+        ListView team1 = (ListView) findViewById(R.id.team1);
+        ListView team2 = (ListView) findViewById(R.id.team2);
+        TextView cantidadJugadores = (TextView) findViewById(R.id.cantPlayers);
+        cantidadJugadores.setText("");
+        adapter1 = null;
+        adapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, firstTeam);
+        team1.setAdapter(adapter1);
+        adapter2 = null;
+        adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, secondTeam);
+        team2.setAdapter(adapter2);
+        adapter3 = null;
+        adapter3 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, players);
+        currentPlayers.setAdapter(adapter3);
+        adapter1.notifyDataSetChanged();
+        adapter2.notifyDataSetChanged();
+        adapter3.notifyDataSetChanged();
+
+    }
+    public void mezclarOnClick(View v){
         long seed = System.nanoTime();
         Collections.shuffle(players, new Random(seed));
         showTheTeams(players,seed);
     }
     public void showTheTeams(ArrayList players,long color){
-        for(int i = 0; i < 5; i++){
+        firstTeam = new ArrayList<>();
+        secondTeam = new ArrayList<>();
+        for(int i = 0; i < (int) players.size()/2; i++){
             firstTeam.add(players.get(i).toString());
         }
 
-        for(int i = 5; i < players.size(); i++){
+        for(int i = (int) players.size()/2; i < players.size(); i++){
             secondTeam.add(players.get(i).toString());
         }
         ListView team1=(ListView) findViewById(R.id.team1);
@@ -242,7 +246,7 @@ public class Left_Menu extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.uploadToServer) {
             return true;
         }
 
