@@ -1,6 +1,5 @@
 package com.example.jlaurenzano.futbol5equipos;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -18,9 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +64,7 @@ public class Left_Menu extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     public void addPlayerOnClick(View v){
@@ -191,8 +191,8 @@ public class Left_Menu extends AppCompatActivity
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("equipo", "fabio");
-                map.put("equipos", "fabiolo");
+                map.put("", "");
+                map.put("", "");
 
                 return map;
             }

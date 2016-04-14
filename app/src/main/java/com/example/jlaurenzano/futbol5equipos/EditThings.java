@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -50,6 +51,7 @@ public class EditThings extends AppCompatActivity
     private ArrayList<String> listaGoles = new ArrayList<>();
     private ArrayAdapter adapter1;
     private int selectedIndex = 0;
+    private String gameId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,9 @@ public class EditThings extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 selectedIndex = position;
                 cargarEquipos(position);
+                int sum = position+1;
+                gameId =""+ sum;
+                Log.d("mensaje",gameId);
             }
 
         });
@@ -216,9 +221,9 @@ public class EditThings extends AppCompatActivity
         for(int i =0;i<array.length();i++){
             stringActual = array.get(i).toString().split(",");
             golesActual = stringActual[4].split(":");
-            listaGoles.add(golesActual[1]);
+            listaGoles.add(golesActual[1].replace("\"","").replace("}",""));
             golesActual = stringActual[5].split(":");
-            listaGoles.add(golesActual[1]);
+            listaGoles.add(golesActual[1].replace("\"","").replace("}",""));
         }
 
     }
@@ -241,14 +246,57 @@ public class EditThings extends AppCompatActivity
     public void cargarEquipos(int position){
         position = 2 * position;
 
-        TextView golEq1 = (TextView) findViewById(R.id.textView2);
-        TextView golEq2 = (TextView) findViewById(R.id.textView3);
+        EditText golEq1 = (EditText) findViewById(R.id.golesEquipo1);
+        EditText golEq2 = (EditText) findViewById(R.id.golesEquipo2);
         golEq1.setText(listaGoles.get(position));
         golEq2.setText(listaGoles.get(position + 1));
 
     }
 
+    public void updateGoalsOnClick(View v){
+        EditText golesEq1 = (EditText) findViewById(R.id.golesEquipo1);
+        EditText golesEq2 = (EditText) findViewById(R.id.golesEquipo2);
+        String gol1 = golesEq1.getText().toString();
+        String gol2 = golesEq2.getText().toString();
+        sendUpdateRequest(gol1,gol2,gameId);
+    }
 
 
+    public void sendUpdateRequest(String gol1, String gol2,String gameId) {
+        final String url = "http://altifutbol5.tk/update.php?gol="+gol1+"&goles="+gol2+"&id="+gameId;
+        Log.d("ahi viene","viene");
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        Log.d("Response", response.toString());
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("", "");
+                map.put("", "");
 
+                return map;
+            }
+        };
+
+// add it to the RequestQueue
+
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(getRequest);
+    }
 }
