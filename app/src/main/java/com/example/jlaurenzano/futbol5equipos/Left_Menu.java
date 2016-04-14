@@ -1,5 +1,6 @@
 package com.example.jlaurenzano.futbol5equipos;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -77,6 +79,11 @@ public class Left_Menu extends AppCompatActivity
          adapter3.notifyDataSetChanged();
     }
 
+    public void changeActivity(){
+       Intent intent = new Intent(this, EditThings.class);
+       startActivity(intent);
+    }
+
     public void deleteDataOnClick(View v){
         players = new ArrayList<String>();
         firstTeam = new ArrayList<String>();
@@ -106,40 +113,47 @@ public class Left_Menu extends AppCompatActivity
         showTheTeams(players,seed);
     }
     public void showTheTeams(ArrayList players,long color){
-        firstTeam = new ArrayList<>();
-        secondTeam = new ArrayList<>();
-        for(int i = 0; i < (int) players.size()/2; i++){
-            firstTeam.add(players.get(i).toString());
-        }
-
-        for(int i = (int) players.size()/2; i < players.size(); i++){
-            secondTeam.add(players.get(i).toString());
-        }
-        ListView team1=(ListView) findViewById(R.id.team1);
-        ListView  team2=(ListView) findViewById(R.id.team2);
-        adapter1 = null;
-        adapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, firstTeam);
-        team1.setAdapter(adapter1);
-        adapter2 = null;
-        adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, secondTeam);
-        team2.setAdapter(adapter2);
-        TextView estado1 = (TextView)findViewById(R.id.estado1);
-        TextView estado2 = (TextView)findViewById(R.id.estado2);
-        if(color % 2 == 0){
-            estado1.setText("Chaleco");
-            estado2.setText("Sin Chaleco");
+        if(players.size() % 2 != 0){
+            Toast.makeText(Left_Menu.this,"Socio, tenes cantidad de jugadores Impares",
+                    Toast.LENGTH_SHORT).show();
         } else {
-            estado2.setText("Chaleco");
-            estado1.setText("Sin Chaleco");
-        }
-        adapter2.notifyDataSetChanged();
-        adapter1.notifyDataSetChanged();
+            firstTeam = new ArrayList<>();
+            secondTeam = new ArrayList<>();
+            for (int i = 0; i < (int) players.size() / 2; i++) {
+                firstTeam.add(players.get(i).toString());
+            }
 
-        if(shouldUploadChecked) {
-            Log.d("Subir a servidor","Subiendo al server");
-            new MyTask().execute();
-        } else {
-            Log.d("Subir a servidor","No subimos al server");
+            for (int i = (int) players.size() / 2; i < players.size(); i++) {
+                secondTeam.add(players.get(i).toString());
+            }
+            ListView team1 = (ListView) findViewById(R.id.team1);
+            ListView team2 = (ListView) findViewById(R.id.team2);
+            adapter1 = null;
+            adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, firstTeam);
+            team1.setAdapter(adapter1);
+            adapter2 = null;
+            adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, secondTeam);
+            team2.setAdapter(adapter2);
+            TextView estado1 = (TextView) findViewById(R.id.estado1);
+            TextView estado2 = (TextView) findViewById(R.id.estado2);
+            if (color % 2 == 0) {
+                estado1.setText("Chaleco");
+                estado2.setText("Sin Chaleco");
+            } else {
+                estado2.setText("Chaleco");
+                estado1.setText("Sin Chaleco");
+            }
+            adapter2.notifyDataSetChanged();
+            adapter1.notifyDataSetChanged();
+
+            if (shouldUploadChecked) {
+                Log.d("Subir a servidor", "Subiendo al server");
+                Toast.makeText(Left_Menu.this,"Subiendo al Server!",
+                        Toast.LENGTH_SHORT).show();
+                new MyTask().execute();
+            } else {
+                Log.d("Subir a servidor", "No subimos al server");
+            }
         }
     }
 
@@ -248,6 +262,9 @@ public class Left_Menu extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.uploadToServer) {
             return true;
+        } else if (id == R.id.openEditThings){
+            changeActivity();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -261,7 +278,9 @@ public class Left_Menu extends AppCompatActivity
         if (id == R.id.uploadToServer){
              toggleOnClick(item);
 
-         }
+         } else if (id == R.id.openEditThings){
+            changeActivity();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

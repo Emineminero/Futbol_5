@@ -9,6 +9,10 @@
             android:id="@+id/uploadToServer"
             android:icon="@drawable/ic_menu_cross"
             android:title="Subir a Servidor?" />
+        <item
+
+            android:id="@+id/openEditThings"
+            android:title="Editar partidos" />
 
     </group>
 
