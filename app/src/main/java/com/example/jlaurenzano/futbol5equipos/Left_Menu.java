@@ -149,7 +149,7 @@ public class Left_Menu extends AppCompatActivity
             adapter2.notifyDataSetChanged();
             adapter1.notifyDataSetChanged();
 
-            if (shouldUploadChecked) {
+            if (shouldUploadChecked && firstTeam.size()>0) {
                 Log.d("Subir a servidor", "Subiendo al server");
                 Toast.makeText(Left_Menu.this,"Subiendo al Server!",
                         Toast.LENGTH_SHORT).show();
