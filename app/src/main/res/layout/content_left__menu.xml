@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,13 +22,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/jugador"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:inputType="textPersonName"
         android:text="Jugador"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:allowUndo="true" />
+        android:allowUndo="true"
+        android:layout_marginTop="81dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -74,18 +80,18 @@
         android:layout_height="wrap_content"
         android:text="Agregar Jugador"
         android:id="@+id/addPlayer"
-        android:layout_alignTop="@+id/jugador"
-        android:layout_toEndOf="@+id/jugador"
-        android:onClick="addPlayerOnClick" />
+        android:onClick="addPlayerOnClick"
+        android:layout_below="@+id/jugador"
+        android:layout_centerHorizontal="true" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/jugadoresActuales"
         android:choiceMode="none"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/armarCuadros"
         android:layout_toEndOf="@+id/addPlayer"
-        android:layout_above="@+id/armarCuadros" />
+        android:layout_alignTop="@+id/jugador" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -93,9 +99,10 @@
         android:layout_height="wrap_content"
         android:text="Borrar Todo"
         android:id="@+id/deleteData"
-        android:layout_below="@+id/addPlayer"
-        android:layout_alignParentStart="true"
-        android:onClick="deleteDataOnClick" />
+        android:onClick="deleteDataOnClick"
+        android:layout_alignBaseline="@+id/armarCuadros"
+        android:layout_alignBottom="@+id/armarCuadros"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,3 +114,4 @@
 
 
 </RelativeLayout>
+</ScrollView>

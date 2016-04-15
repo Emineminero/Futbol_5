@@ -88,8 +88,6 @@ public class EditThings extends AppCompatActivity
             }
 
         });
-
-
     }
 
 
@@ -120,7 +118,7 @@ public class EditThings extends AppCompatActivity
             this.finish();
             return true;
         } else if (id == R.id.reloadList){
-            loadDatainListView();
+            loadDatainListView(item.getActionView());
             return true;
         } else if(id == R.id.volver){
             onBackPressed();
@@ -187,7 +185,7 @@ public class EditThings extends AppCompatActivity
         queue.add(getRequest);
     }
 
-    public void loadDatainListView(){
+    public void loadDatainListView(View v){
         ListView listView = (ListView) findViewById(R.id.listView);
         listaEquipos = new ArrayList<>();
         Log.d("Mensaje","Entrando al for+3");
