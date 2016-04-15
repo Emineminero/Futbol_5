@@ -50,7 +50,6 @@ public class EditThings extends AppCompatActivity
     private ArrayList<String> listaEquipos = new ArrayList<>();
     private ArrayList<String> listaGoles = new ArrayList<>();
     private ArrayAdapter adapter1;
-    private int selectedIndex = 0;
     private String gameId;
 
     @Override
@@ -81,10 +80,10 @@ public class EditThings extends AppCompatActivity
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                selectedIndex = position;
                 cargarEquipos(position);
-                int sum = position+1;
-                gameId =""+ sum;
+                String[] textSplitted;
+                textSplitted = lv.getItemAtPosition(position).toString().split("\\)");
+                gameId = textSplitted[0];
                 Log.d("mensaje",gameId);
             }
 
@@ -122,6 +121,9 @@ public class EditThings extends AppCompatActivity
             return true;
         } else if (id == R.id.reloadList){
             loadDatainListView();
+            return true;
+        } else if(id == R.id.volver){
+            onBackPressed();
             return true;
         }
 
@@ -194,8 +196,8 @@ public class EditThings extends AppCompatActivity
         listaEquipos = new ArrayList<>();
         Log.d("Mensaje","Entrando al for+3");
         Log.d("Mensaje",""+lista.size());
-        for(int i =1; i < lista.size();i = i+3){
-            listaEquipos.add(lista.get(i)+" - "+ lista.get(i+1));
+        for(int i =0; i < lista.size();i = i+3){
+            listaEquipos.add(lista.get(i).replace("{","").replace("id:","")+") "+ lista.get(i+1)+" - "+ lista.get(i+2));
             Log.d("Mensaje",listaEquipos.get(0));
         }
 

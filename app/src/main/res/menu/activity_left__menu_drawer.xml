@@ -12,6 +12,7 @@
         <item
 
             android:id="@+id/openEditThings"
+            android:icon="@mipmap/edit"
             android:title="Editar partidos" />
 
     </group>
